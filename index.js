@@ -7,13 +7,13 @@ const bot = new Telegraf('--REPLACE--ME--WITH--TOKEN--') // It's a test bot ... 
  * You will notice the problem and the bot won't be able to stop texting you.
  */
 
-const session = require('telegraf/session')
-const Stage = require('telegraf/stage')
-const Scene = require('telegraf/scenes/base')
+const {session} = require('telegraf')
+const {Stage} = require('telegraf')
+const { BaseScene } = require('telegraf')
 const { leave } = Stage
 
 // Greeter scene
-const greeter = new Scene('greeter')
+const greeter = new BaseScene('greeter')
 greeter.enter((ctx) => ctx.reply('Hi'))
 
 greeter.command('/another' , ctx => {
@@ -34,7 +34,7 @@ greeter.leave((ctx) => {
 greeter.hears(/hi/gi, leave())
 greeter.on('message', (ctx) => ctx.reply('Send `hi`'))
 
-const anotherScene = new Scene('scene_2')
+const anotherScene = new BaseScene('scene_2')
 anotherScene.enter((ctx) => ctx.reply('Another one - DJ Khalid'))
 anotherScene.leave((ctx) => ctx.reply('-- BYE --'))
 anotherScene.on('text' , ctx => ctx.scene.enter('greeter')) 
